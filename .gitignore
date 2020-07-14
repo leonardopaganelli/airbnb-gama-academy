@@ -1,3 +1,4 @@
 node_modules
 control
 /dist/*
+/coverage/*
