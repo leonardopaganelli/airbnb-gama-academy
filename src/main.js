@@ -1,46 +1,60 @@
-fetch("https://api.sheety.co/30b6e400-9023-4a15-8e6c-16aa4e3b1e72")
-  .then(response => response.json())
-  .then(result => {
-    result.map(element => {
-      const { photo, property_type, name, price } = element;
+import { getHouses } from './service'
+import { monetaryFormat } from './util'
 
-      const row = document.querySelector(".row");
+const loadData = async () => {
+  let houseList
 
-      const div = document.createElement("div");
-      div.className = "col-md-4";
+  try {
+    houseList = await getHouses()
+  } catch (error) {
+    console.error('Ocorre um erro ao carregar a lista de casas', error)
+    alert('Ocorre um erro ao carregar as casas, tente novamente mais tarde')
+  }
 
-      const card = document.createElement('div')
-      card.className = "card mb-4 box-shadow";
+  return houseList || []
+}
 
-      const image = document.createElement('img')
-      image.className = "card-img-top";
-      image.src = photo;
+const mapTemplateHouseCard = ({
+  name,
+  photo,
+  price,
+  property_type
+}) => (`
+  <div class="col-md-4">
+    <div class="card mb-4 box-shadow">
+      <img
+        class="card-img-top"
+        src="${photo}"
+        alt="Foto do imóvel ${name}"
+      >
+      <div class="card-body">
+        <div class="card-text">
+          <p class="property-type">
+            ${property_type}
+          </p>
+          <p class="property-name">
+            ${name}
+          </p>
+          <p class="property-price">
+            ${monetaryFormat(price)}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+`)
 
-      const cardBody = document.createElement('div')
-      cardBody.className = 'card-body';
+const addCardsToContent = (cardsMapped = []) => {
+  const row = document.querySelector(".row")
 
-      const cardText = document.createElement('div')
-      cardText.className = 'card-text'
+  row.innerHTML = cardsMapped.join(' ')
+}
 
-      const propertyType = document.createElement("p");
-      propertyType.className = "property-type";
-      propertyType.innerHTML = property_type;
+const initPage = async () => {
+  const houseList = await loadData()
+  const houseCardsMapped = houseList.map(mapTemplateHouseCard)
 
-      const propertyName = document.createElement("p");
-      propertyName.className = "property-name";
-      propertyName.innerHTML = name;
+  addCardsToContent(houseCardsMapped)
+}
 
-      const propertyPrice = document.createElement("p");
-      propertyPrice.className = "property-price";
-      propertyPrice.innerHTML = price;
-
-      row.appendChild(div);
-      div.appendChild(card);
-      card.appendChild(image);
-      card.appendChild(cardBody);
-      cardBody.appendChild(cardText);
-      cardText.appendChild(propertyType);
-      cardText.appendChild(propertyName);
-      cardText.appendChild(propertyPrice);
-    });
-  });
+initPage()
