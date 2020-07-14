@@ -43,8 +43,8 @@ Com o projeto em seu computador, é necessário rodar o comando ```npm install``
 
 Tendo as dependências instaladas com sucesso temos os seguintes scripts dentro do package.json:
 
-* build - compila o projeto e gera os projetos na pasta dist;
-* serve - cria um servidor local para acessar a aplicação no endereço ```localhost:8080```* ;
+* <b>build</b> - compila o projeto e gera os projetos na pasta dist;
+* <b>serve</b> - cria um servidor local para acessar a aplicação no endereço ```localhost:8080```* ;
 * <b>dev</b> - complia o projeto e gera o servidor, com isso sempre que atualizar qualquer arquivo será gerado um novo compilado e o servidor terá os arquivos atualizados no navegador;
 
 *As configurações para o servidor web podem ser alteradas no arquivo ```webpack.config.js```
@@ -64,8 +64,12 @@ para mais configurações do webpack-dev-server pode ser consultado a [documenta
 
 O exemplo pode ser acessado [aqui](https://leonardopaganelli.github.io/airbnb-gama-academy/dist/) ou clonando o projeto e abrindo o arquivo index.html, do diretório dist, por qualquer navegador.
 
-![Resultado final](./src/screeshot.png)
+![Resultado final](/screenshot.png)
 
 ## Pendências futuras
 
 - [ ] Implementar testes
+
+## Agradecimentos
+
+@douglasmaiabr, ex-aluno do Gama Experience que mantém disponibilizado a API para consultarmos. ;)
